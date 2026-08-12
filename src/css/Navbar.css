@@ -31,19 +31,59 @@ nav {
   color: rgb(4, 37, 65);
   font-size: 1.2rem;
 }
-.task-type {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5px;
+.task-filters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
 }
-.task-type button {
+.task-filters button {
   border: none;
   color: rgb(4, 37, 65);
   font-size: 0.8rem;
   font-weight: bold;
+  width: 5rem;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease;
 }
+.task-filters button:hover {
+  transform: translateY(-0.5px);
+
+  background-color: rgb(225, 232, 240);
+}
+.task-filters button.active {
+  color: white;
+  background-color: rgb(4, 37, 65);
+  border: 1px solid white;
+}
+
 @media (max-width: 600px) {
   .title {
     font-size: 1.3rem;
+  }
+  .add-button {
+    padding: 0.5rem;
+  }
+  .add-button > * {
+    color: rgb(4, 37, 65);
+    font-size: 1rem;
+  }
+  .task-filters button {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 450px) {
+  .title {
+    font-size: 1.1rem;
+  }
+  .add-button {
+    padding: 0.5rem;
+  }
+  .add-button > * {
+    color: rgb(4, 37, 65);
+    font-size: 0.8rem;
+  }
+  .task-filters button {
+    font-size: 0.6rem;
+    width: 4rem;
   }
 }
