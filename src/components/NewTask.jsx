@@ -1,12 +1,25 @@
 import React from "react";
 import { useState } from "react";
 import "../css/NewTask.css";
-const NewTask = ({ setIsNewTaskOpen }) => {
+const NewTask = ({ setIsNewTaskOpen, setTasks }) => {
   const dateToday = new Date();
   const [starred, setStarred] = useState(false);
 
   const handleSumbit = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    setTasks((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        title: form.title.value,
+        description: form.description.value,
+        date: form.date.value,
+        type: form.type.value,
+        starred: starred,
+        completed: false,
+      },
+    ]);
     setIsNewTaskOpen(false);
   };
   const handleCancel = (e) => {
@@ -17,10 +30,15 @@ const NewTask = ({ setIsNewTaskOpen }) => {
   return (
     <>
       <div className="modal-overlay">
-        <form className="new-task-form open-sans" action="">
+        <form
+          onSubmit={handleSumbit}
+          className="new-task-form open-sans"
+          action=""
+        >
           <h3>Add a new task</h3>
           <input
             className="new-task-title indie-flower"
+            name="title"
             type="text"
             placeholder="Enter title"
             required
@@ -33,10 +51,11 @@ const NewTask = ({ setIsNewTaskOpen }) => {
           <div className="task-details">
             <input
               className="new-task-time"
+              name="date"
               type="date"
               defaultValue={`${dateToday.toISOString().split("T")[0]}`}
             />
-            <select className="new-task-type" name="priority" id="priority">
+            <select className="new-task-type" name="type" id="type">
               <option value="low">Personal</option>
               <option value="school">School</option>
               <option value="qalam">Qalam</option>
@@ -45,16 +64,13 @@ const NewTask = ({ setIsNewTaskOpen }) => {
           </div>
           <textarea
             id="description"
+            name="description"
             rows={1}
             placeholder="Enter description"
             className="new-task-description indie-flower"
           />
           <div className="new-task-decision">
-            <button
-              onClick={handleSumbit}
-              className="new-task-submit"
-              type="submit"
-            >
+            <button className="new-task-submit" type="submit">
               Add Task
             </button>
             <button
