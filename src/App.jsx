@@ -1,18 +1,19 @@
 import "./css/App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import NewTask from "./components/NewTask";
 import TaskList from "./components/TaskList";
 
 function App() {
   const [isNewTaskOpen, setIsNewTaskOpen] = useState(false);
+  const [editingTaskId, setEditingTaskId] = useState(null);
   const testTasks = [
     {
       id: 1,
       title: "Task 1",
       date: "2023-06-01",
       description: "This is task 1",
-      type: "Personal",
+      type: "personal",
       starred: true,
       completed: false,
     },
@@ -21,7 +22,7 @@ function App() {
       title: "Task 2",
       description: "This is task 2",
       date: "2023-06-02",
-      type: "School",
+      type: "school",
       starred: false,
       completed: false,
     },
@@ -31,12 +32,44 @@ function App() {
       description:
         "This is task 3 and I am a very long description that will test the responsiveness of the task item component. I want to see how it behaves when the text is too long and whether it wraps correctly or not.",
       date: "2023-06-03",
-      type: "Qalam",
+      type: "qalam",
+      starred: true,
+      completed: true,
+    },
+    {
+      id: 4,
+      title: "Nuraynie Seid",
+      description:
+        "This is task 3 and I am a very long description that will test the responsiveness of the task item component. I want to see how it behaves when the text is too long and whether it wraps correctly or not.",
+      date: "2023-06-03",
+      type: "qalam",
+      starred: true,
+      completed: true,
+    },
+    {
+      id: 5,
+      title: "Merwan Mohammed Ibrahim",
+      description:
+        "This is task 3 and I am a very long description that will test the responsiveness of the task item component. I want to see how it behaves when the text is too long and whether it wraps correctly or not.",
+      date: "2023-06-03",
+      type: "qalam",
       starred: true,
       completed: true,
     },
   ];
-  const [tasks, setTasks] = useState(testTasks);
+
+  const [tasks, setTasks] = useState(() => {
+    const storedTasks = localStorage.getItem("tasks");
+
+    if (storedTasks) {
+      return JSON.parse(storedTasks);
+    } else {
+      return [];
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const myStyle = {
     textAlign: "center",
@@ -68,12 +101,22 @@ function App() {
   const onDeleteTask = (taskId) => {
     setTasks((prev) => prev.filter((task) => task.id !== taskId));
   };
+  const onEditTask = (taskId) => {
+    setEditingTaskId(taskId);
+    setIsNewTaskOpen(true);
+  };
+  const taskToEdit = tasks.find((task) => task.id === editingTaskId);
 
   return (
     <>
       <Navbar setIsNewTaskOpen={setIsNewTaskOpen} />
       {isNewTaskOpen && (
-        <NewTask setIsNewTaskOpen={setIsNewTaskOpen} setTasks={setTasks} />
+        <NewTask
+          setIsNewTaskOpen={setIsNewTaskOpen}
+          setTasks={setTasks}
+          taskToEdit={taskToEdit}
+          setEditingTaskId={setEditingTaskId}
+        />
       )}
       <h3 style={myStyle}>Task List</h3>
 
@@ -82,6 +125,7 @@ function App() {
         onToggleComplete={onToggleComplete}
         onToggleStar={onToggleStar}
         onDeleteTask={onDeleteTask}
+        onEditTask={onEditTask}
       />
     </>
   );

@@ -1,6 +1,6 @@
 .task-item {
   position: relative;
-  background-color: #f0f0f0;
+  background-color: rgb(240, 240, 240);
   color: rgb(4, 37, 65);
   width: 90%;
   flex: 1 1 280px;
@@ -53,6 +53,31 @@
 
 .delete-task {
   position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 4.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-weight: bold;
+}
+.delete-task:hover {
+  box-shadow: 0 5px 10px -5px black;
+}
+.edit-task {
+  position: absolute;
+  bottom: 4.25rem;
+  right: 1.5rem;
+  width: 4.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-weight: bold;
+}
+.edit-task:hover {
+  box-shadow: 0 5px 10px -5px black;
 }
 
 /* check box styling  */

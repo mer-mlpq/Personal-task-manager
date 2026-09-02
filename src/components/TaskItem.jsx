@@ -1,13 +1,21 @@
 import React from "react";
 import "../css/TaskItem.css";
 
-const TaskItem = ({ task, onToggleComplete, onToggleStar, onDeleteTask }) => {
+const TaskItem = ({
+  task,
+  onToggleComplete,
+  onToggleStar,
+  onDeleteTask,
+  onEditTask,
+}) => {
   return (
     <div className="task-item open-sans">
       <h3 className="indie-flower card-title">{task.title}</h3>
       <p className="indie-flower description">{task.description}</p>
       <p className="date">Date: {task.date}</p>
-      <p className="type">Type: {task.type}</p>
+      <p className="type">
+        Type: {task.type[0].toUpperCase() + task.type.slice(1)}
+      </p>
 
       <i
         onClick={() => onToggleStar(task.id)}
@@ -25,6 +33,9 @@ const TaskItem = ({ task, onToggleComplete, onToggleStar, onDeleteTask }) => {
       </p>
       <button onClick={() => onDeleteTask(task.id)} className="delete-task">
         Delete
+      </button>
+      <button onClick={() => onEditTask(task.id)} className="edit-task">
+        Edit
       </button>
     </div>
   );
