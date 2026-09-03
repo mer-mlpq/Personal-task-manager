@@ -7,56 +7,7 @@ import TaskList from "./components/TaskList";
 function App() {
   const [isNewTaskOpen, setIsNewTaskOpen] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const testTasks = [
-    {
-      id: 1,
-      title: "Task 1",
-      date: "2023-06-01",
-      description: "This is task 1",
-      type: "personal",
-      starred: true,
-      completed: false,
-    },
-    {
-      id: 2,
-      title: "Task 2",
-      description: "This is task 2",
-      date: "2023-06-02",
-      type: "school",
-      starred: false,
-      completed: false,
-    },
-    {
-      id: 3,
-      title: "Taskjfjsdkjqfjqw; fkjadskpirfpqufjqfadfjqpod q;3",
-      description:
-        "This is task 3 and I am a very long description that will test the responsiveness of the task item component. I want to see how it behaves when the text is too long and whether it wraps correctly or not.",
-      date: "2023-06-03",
-      type: "qalam",
-      starred: true,
-      completed: true,
-    },
-    {
-      id: 4,
-      title: "Nuraynie Seid",
-      description:
-        "This is task 3 and I am a very long description that will test the responsiveness of the task item component. I want to see how it behaves when the text is too long and whether it wraps correctly or not.",
-      date: "2023-06-03",
-      type: "qalam",
-      starred: true,
-      completed: true,
-    },
-    {
-      id: 5,
-      title: "Merwan Mohammed Ibrahim",
-      description:
-        "This is task 3 and I am a very long description that will test the responsiveness of the task item component. I want to see how it behaves when the text is too long and whether it wraps correctly or not.",
-      date: "2023-06-03",
-      type: "qalam",
-      starred: true,
-      completed: true,
-    },
-  ];
+  const [filter, setFilter] = useState("all");
 
   const [tasks, setTasks] = useState(() => {
     const storedTasks = localStorage.getItem("tasks");
@@ -71,6 +22,17 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  let displayedTasks;
+
+  if (filter === "all") {
+    displayedTasks = tasks;
+  } else if (filter === "starred") {
+    displayedTasks = tasks.filter((task) => task.starred === true);
+  } else if (filter === "active") {
+    displayedTasks = tasks.filter((task) => task.completed === false);
+  } else if (filter === "completed") {
+    displayedTasks = tasks.filter((task) => task.completed === true);
+  }
   const myStyle = {
     textAlign: "center",
     fontFamily: "open sans",
@@ -109,7 +71,13 @@ function App() {
 
   return (
     <>
-      <Navbar setIsNewTaskOpen={setIsNewTaskOpen} />
+      <Navbar
+        setIsNewTaskOpen={setIsNewTaskOpen}
+        setTasks={setTasks}
+        tasks={tasks}
+        setFilter={setFilter}
+        filter={filter}
+      />
       {isNewTaskOpen && (
         <NewTask
           setIsNewTaskOpen={setIsNewTaskOpen}
@@ -121,7 +89,7 @@ function App() {
       <h3 style={myStyle}>Task List</h3>
 
       <TaskList
-        tasks={tasks}
+        tasks={displayedTasks}
         onToggleComplete={onToggleComplete}
         onToggleStar={onToggleStar}
         onDeleteTask={onDeleteTask}

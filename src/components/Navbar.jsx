@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/Navbar.css";
-const Navbar = ({ setIsNewTaskOpen }) => {
+const Navbar = ({ setIsNewTaskOpen, setTasks, tasks, setFilter, filter }) => {
+  // const filterAll = () => {
+  //   const displayedTask = tasks;
+  //   setFilter("all");
+  // };
+  // const filterStarred = () => {
+  //   const displayedTask = tasks.filter((task) => task.starred === true);
+  //   setFilter("starred");
+  // };
+  // const filterActive = () => {
+  //   const displayedTask = tasks.filter((task) => task.completed === false);
+  //   setFilter("active");
+  // };
+  // const filterCompleted = () => {
+  //   const displayedTask = tasks.filter((task) => task.completed === true);
+  //   setFilter("completed");
+  // };
   return (
     <nav className="open-sans">
       <div className="left-half">
@@ -12,10 +28,30 @@ const Navbar = ({ setIsNewTaskOpen }) => {
           <p>Add Task</p>
         </button>
         <div className="task-filters">
-          <button className="all-tasks-btn active">All Tasks</button>
-          <button className="starred-tasks-btn">Starred</button>
-          <button className="active-tasks-btn">Active</button>
-          <button className="completed-tasks-btn">Completed</button>
+          <button
+            onClick={() => setFilter("all")}
+            className={`all-tasks-btn ${filter === "all" ? "active" : ""}`}
+          >
+            All Tasks
+          </button>
+          <button
+            onClick={() => setFilter("starred")}
+            className={`starred-tasks-btn ${filter === "starred" ? "active" : ""}`}
+          >
+            Starred
+          </button>
+          <button
+            onClick={() => setFilter("active")}
+            className={`active-tasks-btn ${filter === "active" ? "active" : ""}`}
+          >
+            Active
+          </button>
+          <button
+            onClick={() => setFilter("completed")}
+            className={`completed-tasks-btn ${filter === "completed" ? "active" : ""}`}
+          >
+            Completed
+          </button>
         </div>
       </div>
     </nav>
