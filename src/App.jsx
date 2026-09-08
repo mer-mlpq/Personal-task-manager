@@ -7,6 +7,12 @@ import TaskList from "./components/TaskList";
 function App() {
   const [isNewTaskOpen, setIsNewTaskOpen] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState(null);
+  const [taskTypes, setTaskTypes] = useState([
+    "personal",
+    "work",
+    "studies",
+    "fitness",
+  ]);
   const [filter, setFilter] = useState("all");
 
   const [tasks, setTasks] = useState(() => {
@@ -84,6 +90,8 @@ function App() {
           setTasks={setTasks}
           taskToEdit={taskToEdit}
           setEditingTaskId={setEditingTaskId}
+          taskTypes={taskTypes}
+          setTaskTypes={setTaskTypes}
         />
       )}
       <h3 style={myStyle}>Task List</h3>

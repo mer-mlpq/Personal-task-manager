@@ -5,8 +5,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 500;
 }
+
 .new-task-form {
   position: relative;
   background-color: rgb(4, 37, 65);
@@ -98,6 +99,45 @@
 .new-task-decision button:hover {
   font-weight: 600;
 }
+.custom-type-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.new-task-custom-type {
+  box-sizing: border-box;
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 1.5rem;
+  border: 2px solid #e70000;
+  outline: none;
+}
+
+.new-task-custom-type:focus {
+  border-color: #ffffff;
+}
+
+.custom-type-confirm {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  color: rgb(4, 37, 65);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.custom-type-container button:hover {
+  transform: scale(1.1);
+}
 
 @media (max-width: 620px) {
   .new-task-form {
@@ -110,7 +150,8 @@
   .new-task-title,
   .new-task-time,
   .new-task-type,
-  .new-task-description {
+  .new-task-description,
+  .new-task-custom-type {
     font-size: 1.2rem;
   }
   .star-icon {
