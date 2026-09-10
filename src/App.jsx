@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import NewTask from "./components/NewTask";
 import TaskList from "./components/TaskList";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [isNewTaskOpen, setIsNewTaskOpen] = useState(false);
@@ -14,6 +15,7 @@ function App() {
     "fitness",
   ]);
   const [filter, setFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [tasks, setTasks] = useState(() => {
     const storedTasks = localStorage.getItem("tasks");
@@ -28,17 +30,24 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  let displayedTasks;
+  const displayedTasks = tasks.filter((task) => {
+    const matchesSearch =
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchTerm.toLowerCase());
 
-  if (filter === "all") {
-    displayedTasks = tasks;
-  } else if (filter === "starred") {
-    displayedTasks = tasks.filter((task) => task.starred === true);
-  } else if (filter === "active") {
-    displayedTasks = tasks.filter((task) => task.completed === false);
-  } else if (filter === "completed") {
-    displayedTasks = tasks.filter((task) => task.completed === true);
-  }
+    if (!matchesSearch) {
+      return false;
+    }
+    if (filter === "all") {
+      return true;
+    } else if (filter === "starred") {
+      return task.starred === true;
+    } else if (filter === "active") {
+      return task.completed === false;
+    } else if (filter === "completed") {
+      return task.completed === true;
+    }
+  });
   const myStyle = {
     textAlign: "center",
     fontFamily: "open sans",
@@ -84,6 +93,7 @@ function App() {
         setFilter={setFilter}
         filter={filter}
       />
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {isNewTaskOpen && (
         <NewTask
           setIsNewTaskOpen={setIsNewTaskOpen}

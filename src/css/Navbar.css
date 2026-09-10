@@ -80,10 +80,12 @@ nav {
   }
   .add-button > * {
     color: rgb(4, 37, 65);
-    font-size: 0.8rem;
+  }
+  .add-button p {
+    display: none;
   }
   .task-filters button {
-    font-size: 0.6rem;
-    width: 4rem;
+    font-size: 0.5rem;
+    width: 3.5rem;
   }
 }
